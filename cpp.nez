@@ -1,1 +1,582 @@
-Test
+/*Top Level*/
+
+/*TopLevel                        = { ( __ SourceElement )* __ #Source }
+SourceElement                   = Statement*/
+SPACE                           = [\t\v\f \u00A0\uFEFF]
+__                              = ( SPACE / LINE_TERMINATOR_SEQUENCE / COMMENT )*
+_                               = ( SPACE / MULTI_LINE_COMMENT_SINGLE_LINE )*
+LINE_TERMINATOR                 = [\n\r\u2028\u2029]
+LINE_TERMINATOR_SEQUENCE        = '\n'
+                                / '\r\n'
+                                / '\r'
+COMMENT                         = MULTI_LINE_COMMENT
+                                / SINGLE_LINE_COMMENT
+MULTI_LINE_COMMENT              = '/*' ( !'*/' . )* '*/'
+MULTI_LINE_COMMENT_SINGLE_LINE  = '/*' ( !( '*/' / LINE_TERMINATOR ) . )* '*/'
+SINGLE_LINE_COMMENT             = '//' ( !LINE_TERMINATOR . )*
+EOS                             = __ ';'
+                                / _ SINGLE_LINE_COMMENT? LINE_TERMINATOR_SEQUENCE
+                                / _ &'}'
+                                / __ EOF
+EOF                             = !.
+
+/*lex*/
+//charset
+//pptoken
+//token
+//header
+//ppnumber
+//name
+
+KEYWORD                         = 'alignas'
+                                / 'alignof'
+                                / 'asm'
+                                / 'auto'
+                                / 'bool'
+                                / 'break'
+                                / 'case'
+                                / 'catch'
+                                / 'char'
+                                / 'char16_t'
+                                / 'char32_t'
+                                / 'class'
+                                / 'const'
+                                / 'constexpr'
+                                / 'const_cast'
+                                / 'continue'
+                                / 'decltype'
+                                / 'default'
+                                / 'delete'
+                                / 'do'
+                                / 'double'
+                                / 'dynamic_cast'
+                                / 'else'
+                                / 'enum'
+                                / 'explicit'
+                                / 'export'
+                                / 'extern'
+                                / 'false'
+                                / 'float'
+                                / 'for'
+                                /'friend'
+                                / 'goto'
+                                / 'if'
+                                / 'inline'
+                                / 'int'
+                                / 'long'
+                                / 'mutable'
+                                / 'namespace'
+                                / 'new'
+                                / 'noexcept'
+                                / 'new'
+                                / 'nullptr'
+                                / 'operator'
+                                / 'private'
+                                / 'protected'
+                                / 'public'
+                                / 'register'
+                                / 'reinterpret_cast'
+                                / 'return'
+                                / 'short'
+                                / 'signed'
+                                / 'sizeof'
+                                / 'static'
+                                / 'static_assert'
+                                / 'static_cast'
+                                / 'struct'
+                                / 'switch'
+                                / 'template'
+                                / 'this'
+                                / 'thread_local'
+                                / 'throw'
+                                / 'true'
+                                / 'try'
+                                / 'typeof'
+                                / 'TYPE_ID'
+                                / 'typename'
+                                / 'union'
+                                / 'unsinged'
+                                / 'using'
+                                / 'virtual'
+                                / 'void'
+                                / 'volatile'
+                                / 'wchar_t'
+                                / 'while'
+
+//Preprocessing-op-or-punc
+Preprocessing-op-or-punc        = '{'
+                                / '}'
+                                / '['
+                                / ']'
+                                / '#'
+                                / '##'
+                                / '('
+                                / ')'
+                                / '<:'
+                                / ':>'
+                                / '<%'
+                                / '%>'
+                                / '%:'
+                                / '%:%:'
+                                / ';'
+                                / ':'
+                                / '...'
+                                / 'new'
+                                / 'delete'
+                                / '?'
+                                / '::'
+                                / '.'
+                                / '.*'
+                                / '+'
+                                / '-'
+                                / '*'
+                                / '/'
+                                / '%'
+                                / '^'
+                                / '&'
+                                / '|'
+                                / '~'
+                                / '!'
+                                / '='
+                                / '<'
+                                / '>'
+                                / '+='
+                                / '-='
+                                / '*='
+                                / '/='
+                                / '%='
+                                / '^='
+                                / '&='
+                                / '|='
+                                / '<<'
+                                / '>>'
+                                / '>>='
+                                / '<<='
+                                / '=='
+                                / '!='
+                                / '<='
+                                / '>='
+                                / '&&'
+                                / '||'
+                                / '++'
+                                / '--'
+                                / ','
+                                / '->*'
+                                / '->'
+                                / 'and'
+                                / 'and_eq'
+                                / 'bitand'
+                                / 'bitor'
+                                / 'compl'
+                                / 'not'
+                                / 'not_eq'
+                                / 'or'
+                                / 'or_eq'
+                                / 'xor'
+                                / 'xor_eq'
+
+
+//literal.kinds
+//icon
+//ccon
+//fcon
+//string
+//bool
+//nullptr
+//ext
+
+example PreprocessingToken FFFF
+example PreprocessingToken \UFFFFABCD
+example PreprocessingToken <abc>
+example PreprocessingToken "abc"
+example PreprocessingToken 1.234
+example PreprocessiongToken 0123n
+example PreprocessiongToken 1234567890
+example PreprocessiongToken 6.626068E-34F
+example PreprocessiongToken 314159265e-8
+example Literal 0
+example Literal 12ll
+example Literal 002LLU
+example Literal 0xABC
+example Literal 'abc'
+example Literal u'\012'
+example Literal U'\uABCD'
+example Literal L'\x1234'
+example Literal 123E-456f
+example Literal 123e456
+example Literal ""
+example Literal u8"\x123"
+example Literal R"(abc)"
+example Literal true
+example Literal false
+example Literal nullptr
+example Literal 123aaa
+example Literal 123e+456a7
+example Literal L""\uABCD
+
+
+/*basic*/
+/*
+DeclarationSeq = 'DS'
+*/
+//link
+
+/*expr*/
+
+
+/*
+---reserver word---
+Literal = 'LI'
+TYPE_ID = 'TID'
+Identifier = 'ID'
+CONVERSION_FUNCTION_ID = 'CFID'
+LITERAL_OPERATOR_ID = 'LOID'
+ClassName = 'CN'
+DecltypeSpecifier = 'DS'
+TEMPLATE_ID = 'TI'
+TypeName = 'TN'
+NamespaceName = 'NN'
+SIMPLE_TEMPLATE_ID = 'STID'
+CompoundStatement = 'CS'
+ParameterDeclarationClause = 'PDC'
+ExceptionSpecification = 'ES'
+AttributeSpecifierSeq = 'ASS'
+TrailingReturnType = 'TRT'
+BracedInitList = 'BIL'
+SimpleTypeSpecifier = 'STS'
+TypeNameSpecifier = 'TNS'
+InitializerList = 'IL'
+TypeSpecifierSeq = 'TSS'
+PtrOperator = 'PO'
+InitializerClause = 'IC'
+ThrowExpression = 'TE'
+*/
+
+//prim.general
+//prin.lambda
+//post
+//unary
+//new
+//delete
+//unary.noexcept
+//cast
+//mptroper
+//mul
+//add
+//shift
+//rel
+//eq
+//bit.and
+//xor
+//or
+//log.and
+//log.and
+//log.or
+//cond
+//ass
+//comma
+//const
+
+example PostfixExpression this
+example PostfixExpression ( throw )
+example PostfixExpression ( LI ? LI : LI )
+example PostfixExpression ( LI || LI )
+example PostfixExpression ( LI && LI )
+example PostfixExpression ( LI | LI )
+example PostfixExpression ( LI ^ LI )
+example PostfixExpression ( LI & LI )
+example PostfixExpression ( LI != LI )
+example PostfixExpression ( LI >= LI )
+example PostfixExpression ( LI >> LI )
+example PostfixExpression ( LI - LI )
+example PostfixExpression ( LI % LI )
+example PostfixExpression ( LI ->* LI )
+example PostfixExpression noexcept(LI+LI)
+example PostfixExpression sizeof(TID)
+example PostfixExpression alignof(TID)
+example PostfixExpression ::delete sizeof(TID)
+example PostfixExpression LI[this]
+example PostfixExpression LI.templateID
+example PostfixExpression LI->ID
+example PostfixExpression dynamic_cast<TID>(LI)
+example PostfixExpression static_cast<TID>(LI)
+example PostfixExpression reinterpret_cast<TID>(LI)
+example PostfixExpression const_cast<TID>(LI)
+example PostfixExpression typeid(LI)
+example PostfixExpression typeid(TID)
+
+
+
+/*stmt*/
+/*
+---reserved name---
+AttributeSpecifierSeq = 'ASS'
+TryBlock = 'TB'
+Identifier = 'ID'
+ConstantExpression = 'CE'
+Expression = 'EX'
+DeclSpecifierSeq = 'DSS'
+Declarator = 'DE'
+InitializerClause = 'IC'
+BracedInitList = 'BIL'
+SimpleDeclaration = 'SD'
+TypeSpecifierSeq = 'TSS'
+BlockDeclaration = 'BD'
+*/
+//stmt
+//label
+//expr
+//block
+//select
+//iter
+//jump
+//dcl
+
+example Statement A a:{ }
+example Statement default:{}
+example Statement ;
+example Statement A;
+example Statement { }
+example Statement A break ;
+example Statement continue ;
+example Statement return ;
+example Statement return ;
+
+
+
+/*dcl*/
+/*
+---reserved name---
+StringLiteral = 'SL'
+TemplateDeclaration = 'TD'
+ExplicitInstantiation = 'EI'
+ExplicitSpecialization = 'ES'
+NamespaceDefinition = 'ND'
+NamespaceAliasDefinition = 'NAD'
+UsingDeclaration = 'UD'
+UsingDirective = 'UD'
+Identifier = 'ID'
+ConstantExpression = 'CE'
+StringLiteral = 'SL'
+ClassSpecifier = 'CS'
+TypeNameSpecifier = 'TS'
+NestedNameSpecifier = 'NNS'
+SIMPLE_TEMPLATE_ID = 'STI'
+ClassName = 'CN'
+Expression = 'EX'
+CLASS_KEY =  'CK'
+AssignmentExpression = 'AE'
+Token = 'TO'
+ExceptionSpecification = 'ES'
+IdExpression = 'IE'
+CtorInitializer = 'CI'
+CompoundStatement = 'CS'
+FunctionTryBlock = 'CTB'
+ExpressionList = 'EL'
+*/
+
+//dcl
+//spec
+//stc
+//fct.spec
+//typedef
+//type
+//type.simple
+//type.elab
+//enum
+//asm
+//link
+//attr.grammar
+//decl
+//name
+//fct
+//fct.def.general
+//init
+
+example DeclarationSeq [[]];
+example DeclarationSeq constexpr;
+example DeclarationSeq asm(SL);
+example DeclarationSeq static_assert(CE, SL);
+example DeclarationSeq using ID = auto ...;
+example DeclarationSeq enum struct ID:void;
+example DeclarationSeq template<typename>;
+example DeclarationSeq extern template;
+example DeclarationSeq template<>;
+example DeclarationSeq extern SL{}
+example DeclarationSeq ;
+
+
+
+
+/*namespace*/
+/*
+---reserved name---
+Identifier = 'ID'
+DeclarationSeq = 'DS'
+NestedNameSpecifier = 'NNS'
+UNQUALIFIED_ID = 'UI'
+AttributeSpecifierSeq = 'ASS'
+*/
+//def
+//alias
+//udecl
+//udir
+
+example NamespaceName ID
+example NamespaceDefinition inline namespace ID{}
+example NamespaceDefinition namespace inline namespace ID{} {}
+example NamespaceDefinition namespace
+example NamespaceAliasDefinition namespace ID = ID;
+example UsingDeclaration using::UI;
+example UsingDirective using namespace::ID;
+
+/*class*/
+/*
+---reserved name---
+Identifier = 'ID'
+SIMPLE_TEMPLATE_ID = 'STI'
+AttributeSpecifierSeq = 'ASS'
+NestedNameSpecifier = 'NNS'
+DeclSpecifierSeq = 'DSS'
+FunctionDefinition = 'FD'
+UsingDeclaration = 'UD'
+StaticAssertDeclaration = 'SAD'
+TemplateDeclaration = 'TD'
+AliasDeclaration = 'AD'
+Declarator = 'DE'
+BraceOrEqualInitializer = 'BOEI'
+ConstantExpression = 'CE'
+DecltypeSpecifier = 'DS'
+TypeSpecifierSeq = 'TSS'
+PtrOperator = 'PO'
+ExpressionList = 'EL'
+BracedInitList = 'BI'
+*/
+
+//class
+//mem
+//derived
+//conv.fct
+//base.init
+
+example ClassHead union ASS ID explicit
+example ClassHead struct
+
+/*over*/
+OPERATOR_FUNCTION_ID            = 'operator' OVERLOADABLE_OPERATOR
+//                              / 'operator' OVERLOADABLE_OPERATOR '<' TemplateArgumentList'>'
+OVERLOADABLE_OPERATOR           = 'new'
+                                / 'delete'
+                                / 'new' '[' ']'
+                                / 'delete' '[' ']'
+                                / '+'
+                                / '-'
+                                / '*'
+                                / '/'
+                                / '%'
+                                / '^'
+                                / '&'
+                                / '|'
+                                / '~'
+                                / '!'
+                                / '='
+                                / '<'
+                                / '>'
+                                / '+='
+                                / '-='
+                                / '*='
+                                / '/='
+                                / '%='
+                                / '^='
+                                / '&='
+                                / '|='
+                                / '<<'
+                                / '>>'
+                                / '>>='
+                                / '<<='
+                                / '=='
+                                / '!='
+                                / '<='
+                                / '>='
+                                / '&&'
+                                / '||'
+                                / '++'
+                                / '--'
+                                / ','
+                                / '->*'
+                                / '->'
+                                / '(' ')'
+                                / '[' ']'
+
+//LITERAL_OPERATOR_ID             = 'operator' '""' Identifier
+
+/*temp*/
+/*
+---reserved name---
+Identifier = 'ID'
+Declaration = 'DE'
+ParameterDeclaration = 'PD'
+TYPE_ID = 'TI'
+IdExpression = 'IE'
+OPERATOR_FUNCTION_ID = 'OFI'
+LITERAL_OPERATOR_ID = 'LOI'
+ConstantExpression = 'CE'
+NestedNameSpecifier = 'NNS'
+*/
+
+//temp
+//param
+//names
+//res
+//explicit
+//expr.spec
+
+example TemplateDeclaration template<class> DE
+example TemplateDeclaration typename ... ID
+example TemplateDeclaration typename = TI
+
+/*except*/
+/*
+---reserved name---
+CompoundStatement = 'CS'
+TYPE_ID = 'TID'
+CtorInitializer = 'CI'
+AttributeSpecifierSeq = 'ASS'
+TypeSpecifierSeq = 'TSS'
+Declarator = 'DE'
+AbstractDeclarator = 'AD'
+TYPE_ID = 'TI'
+*/
+
+//except
+//spec
+
+example TryBlock try CS catch(...) CS
+example ExceptionSpecification throw()
+example ExceptionSpecification throw(TID, TID...)
+example ExceptionSpecification noexcept
+
+/*cpp*/
+/*
+---reserved name---
+Identifier = 'ID'
+ConstantExpression = 'CE'
+PreprocessingToken = 'PT'
+*/
+//cpp
+NEW_LINE                       = LINE_TERMINATOR_SEQUENCE
+
+example Group '''
+#if CE
+#elif CE
+#else
+#endif
+'''
+
+example Group #include PT
+example Group #define ID(ID, ID, ID) PT
+example Group #undef ID
+example Group #
+example Group PT
+example Group #PT
+
