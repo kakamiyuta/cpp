@@ -1,3 +1,4 @@
 language: java
+install: ./nez.jar
 script: java -jar ./nez.jar parse ./cpp.nez
 
