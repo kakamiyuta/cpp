@@ -1,2 +1,2 @@
 language: java
-script: java -jar nez.jar example parse -g math.nez
+script: java -jar ../nez.jar example parse -g ../math.nez
