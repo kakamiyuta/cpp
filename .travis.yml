@@ -1,5 +1,4 @@
 language: java
-install: ./nez.jar
-before_script:
+before_install:
  - chmod +x ./nez.jar
 script: java -jar ./nez.jar example parse -g ./math.nez
